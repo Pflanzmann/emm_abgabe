@@ -15,21 +15,31 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] private GameObject projectile;
 
-    private Vector3 mouseDragPostion = Vector3.zero;
+    private Vector3 mouseDragPosition = Vector3.zero;
+    private bool projectileSpawnLeft;
 
     private void Update() {
         if(Input.GetKeyDown(KeyCode.Space)) {
-            var obj = Instantiate(projectile, transform);
-            obj.transform.parent = null;
+            if(projectileSpawnLeft) {
+                var obj = Instantiate(projectile, transform);
+                obj.transform.parent = null;
+                obj.transform.position += Vector3.left * 0.6f;
+            } else {
+                var obj = Instantiate(projectile, transform);
+                obj.transform.parent = null;
+                obj.transform.position += Vector3.right * 0.6f;
+            }
+
+            projectileSpawnLeft = !projectileSpawnLeft;
         }
 
         if(Input.GetMouseButtonDown(0)) {
-            mouseDragPostion = Input.mousePosition;
+            mouseDragPosition = Input.mousePosition;
         }
 
 
         if(Input.GetMouseButton(0)) {
-            var pos = (mouseDragPostion - Input.mousePosition).normalized;
+            var pos = (mouseDragPosition - Input.mousePosition).normalized;
 
             transform.Translate(0, 0, Time.deltaTime * moveSpeed * -pos.y);
             transform.Rotate(Vector3.down * (pos.x * 10 * mouseRotationMultiplicator * Time.deltaTime));
