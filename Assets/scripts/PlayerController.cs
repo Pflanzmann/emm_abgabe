@@ -10,13 +10,14 @@ using UnityEngine;
 /// </summary>
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float moveSpeed = 10;
-    [SerializeField] private float rotationAmount = 10;
+    [SerializeField] private float rotationAmount = 0.1f;
     [SerializeField] private float mouseRotationMultiplicator = 10;
 
     [SerializeField] private GameObject projectile;
 
     private Vector3 mouseDragPosition = Vector3.zero;
     private bool projectileSpawnLeft;
+    float angle = 0;
 
     private void Update() {
         if(Input.GetKeyDown(KeyCode.Space)) {
@@ -53,9 +54,12 @@ public class PlayerController : MonoBehaviour {
         transform.Translate(Time.deltaTime * moveSpeed * moveHorizontal, 0, 0);
 
         if(Input.GetKey(KeyCode.Q)) {
-            transform.Rotate(Vector3.down * (rotationAmount * 10 * Time.deltaTime));
+            angle -= rotationAmount * Time.deltaTime;
         } else if(Input.GetKey(KeyCode.E)) {
-            transform.Rotate(Vector3.up * (rotationAmount * 10 * Time.deltaTime));
+            angle += rotationAmount * Time.deltaTime;
         }
+
+        var targetDirection = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
+        transform.rotation = Quaternion.LookRotation(targetDirection);
     }
 }

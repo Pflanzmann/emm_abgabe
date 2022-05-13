@@ -17,10 +17,12 @@ public class FollowPlayer : MonoBehaviour {
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float playerOffset = 2f;
 
-    private void LateUpdate() {
+    private void Update() {
         var speed = maxSpeed * (maxDistance / 100f * Vector3.Distance(transform.position, cameraPos.transform.position));
+
         if(Vector3.Distance(transform.position, cameraPos.transform.position) > .5f)
             transform.position += (cameraPos.transform.position - transform.position).normalized * (Time.deltaTime * speed);
+
         transform.LookAt(player.transform.position + Vector3.up * playerOffset);
     }
 }
