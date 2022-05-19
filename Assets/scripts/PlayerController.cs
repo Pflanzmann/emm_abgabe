@@ -10,7 +10,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float moveSpeed = 10;
-    [SerializeField] private float rotationAmount = 0.1f;
+    [SerializeField] private float rotationAmount = 0.01f;
     [SerializeField] private float mouseRotationMultiplicator = 10;
 
     [SerializeField] private GameObject projectile;
